@@ -1,12 +1,24 @@
 import json
+import sys
 
-def read_from_file():
+def read_from_file(book_name="sorted_bg.json"):
     BG = None
-    with open('sorted_bg.json', 'r') as bg_file:
+    with open(book_name, 'r') as bg_file:
         BG = json.load(bg_file)
     return BG
 
-BG = read_from_file()
+def main():
+    chapter_number = int(sys.argv[1])
+    text_number = int(sys.argv[2])
 
-print(BG['Chapter 1: Observing the Armies on the Battlefield of Kurukṣetra'][0]['devanagari_sanscrit'])
-input()
+    BG = read_from_file()
+    
+    chapters = [chapter for chapter in BG.keys()]
+
+    requested_text = BG[chapters[chapter_number]][text_number]
+    for content in requested_text.values():
+        print(content, end='\n\n')
+    
+
+if __name__ == '__main__':
+    main()
